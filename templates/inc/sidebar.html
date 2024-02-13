@@ -1,0 +1,30 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Дата встречи</th>
+      <th scope="col">Время начала</th>
+      <th scope="col">Время окончания</th>
+      <th scope="col">Количество гостей</th>
+      <th scope="col">Инициатор</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">{{ item.pk }}</th>
+      <td>{{ item.date_meet }}</td>
+      <td>{{ item.time_start }}</td>
+      <td>{{ item.time_end }}</td>
+      <td>{{ item.quantity }}</td>
+      <td>{{ item.user }}</td>
+    </tr>
+  </tbody>
+</table>
+
+            <ul class="list-group" >
+                <li class="list-group-item active">Встречи </li>
+    {% for item in meets %}
+        <li class="list-group-item">№ - {{ item.pk }} дата {{ item.date_meet }} начало {{ item.time_start }} конец {{ item.time_end }}
+            кол-во {{ item.quantity }}, созданно - {{ item.user }} </li>
+    {% endfor %}
+</ul>
