@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rooms settings</title>
+    <title>Meet save&view</title>
     <link rel="icon" href="{% static 'images/M.ico' %}" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
@@ -19,13 +19,14 @@
         <div class="col-xl-2 border border bg-body-tertiary">
             <form method="POST" novalidate>
                 {% csrf_token %}
-                <h5 class="card-subtitle text-body-secondary text-center">Параметры переговорок</h5>
+
+                <h5 class="card-subtitle text-body-secondary text-center">Планирование на дату</h5>
                 <br>
                 <table>
                     {{ form.as_p }}
                 </table>
                 <br>
-                <input type="submit" value="Сохранить">
+                <input type="submit" value="Запланировать">
             </form>
 
         </div>
@@ -34,21 +35,27 @@
             <table class="table table-bordered ">
                 <thead class="table table-light">
                 <tr>
-<!--                    <th scope="col">№</th>-->
-                    <th scope="col">Название</th>
-                    <th scope="col">Кол-во мест</th>
+                    <th scope="col">№</th>
+                    <th scope="col">Дата</th>
+                    <th scope="col">Начало</th>
+                    <th scope="col">Окончание</th>
+                    <th scope="col">Участников</th>
                     <th scope="col">Опция 1</th>
                     <th scope="col">Опция 2</th>
+                    <th scope="col">Статус</th>
+                    <th scope="col">Автор</th>
 
                 </tr>
                 </thead>
 
-                <tbody class="text-center">
-                {% for item in rooms %}
+                <tbody>
+                {% for item in meets %}
                 <tr>
-<!--                    <th>{{ item.pk }}</th>-->
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.volume }}</td>
+                    <th scope="row">{{ item.pk }}</th>
+                    <td>{{ item.date_meet }}</td>
+                    <td>{{ item.time_start }}</td>
+                    <td>{{ item.time_end }}</td>
+                    <td>{{ item.quantity }}</td>
                     <td>{% if item.option1 %}
                         Да
                         {% else %}
@@ -61,6 +68,19 @@
                         Нет
                         {% endif %}
                     </td>
+                    <td>{% if item.status == 0 %}
+                        не запланирована
+                        {% elif item.status == 1 %}
+                        запланирована
+                        {% elif item.status == 2 %}
+                        время занято
+                        {% elif item.status == 3 %}
+                        измените параметры
+                        {% else %}
+                        {{ item.status }}
+                        {% endif %}
+                    </td>
+                    <td>{{ item.user }}</td>
                 </tr>
                 {% endfor %}
                 </tbody>
@@ -68,7 +88,6 @@
         </div>
     </div>
 </div>
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>

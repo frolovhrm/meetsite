@@ -20,15 +20,10 @@ from meetplan import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.index, name='index'),
-    path('my_form/', views.my_form, name='my_form'),
-    path('modelform/', views.model_form, name='modelform'),
-    path('userform/', views.user_form, name='userform'),
-    path('setappform/', views.setapp, name='setapp'),
-    path('listofprof/', views.listofprof, name='listofprof'),
-    path('param/', views.param, name='param'),
+    path('', views.meet, name='meet'),
     path('meet/', views.meet, name='meet'),
     path('room/', views.room, name='room'),
+    path('param/', views.param, name='param'),
     path('plan/', views.plan, name='plan')
 
 ]
