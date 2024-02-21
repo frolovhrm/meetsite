@@ -25,6 +25,7 @@ def meet(request):
 def room(request):
     # make_plan_all_rooms()
     make_list_all_meets()
+    make_plan_all_rooms()
     if request.method == "POST":
         form = RoomForm(request.POST)
         if form.is_valid():

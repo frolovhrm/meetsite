@@ -76,6 +76,8 @@
                         время занято
                         {% elif item.status == 3 %}
                         измените параметры
+                        {% elif item.status == 4 %}
+                        встреча завершилась
                         {% else %}
                         {{ item.status }}
                         {% endif %}

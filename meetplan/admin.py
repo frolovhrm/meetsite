@@ -1,7 +1,5 @@
 from django.contrib import admin
-
-
-from meetplan.models import User, Meeting, Param, Rooms
+from meetplan.models import User, Meeting, Param, Rooms, DatePlan
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -17,17 +15,21 @@ class MeetingAdmin(admin.ModelAdmin):
 
 
 class SetappAdmin(admin.ModelAdmin):
-    list_display = ('startworktime', 'endtworktime', 'timestap',  'numofroom', 'user', 'created_at')
-    exclude = ('roomlist', )
+    list_display = ('startworktime', 'endtworktime', 'timestap', 'user', 'created_at')
 
 
 class RoomAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'volume', 'option1', 'option2', 'plan')
+    list_display = ('pk', 'name', 'volume', 'option1', 'option2')
+
+
+class DatePlanAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'dateplan', 'listplan')
 
 
 admin.site.register(User, UserAdmin)
 admin.site.register(Meeting, MeetingAdmin)
 admin.site.register(Param, SetappAdmin)
 admin.site.register(Rooms, RoomAdmin)
+admin.site.register(DatePlan, DatePlanAdmin)
 
 

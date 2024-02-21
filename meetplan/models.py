@@ -39,7 +39,6 @@ class Rooms(models.Model):
     volume = models.IntegerField(null=False, verbose_name="Кол-во мест")
     option1 = models.BooleanField(default=0, verbose_name="Опция 1")
     option2 = models.BooleanField(default=0, verbose_name="Опция 2")
-    plan = models.JSONField(null=True)
 
     class Meta:
         verbose_name = 'Переговорка'
@@ -50,12 +49,24 @@ class Rooms(models.Model):
         return f"Переговорка {self.pk}"
 
 
+class DatePlan(models.Model):
+    dateplan = models.DateTimeField(verbose_name="Дата")
+    listplan = models.JSONField(null=True, verbose_name="Список запланированных встреч")
+
+    class Meta:
+        verbose_name = 'Дату'
+        verbose_name_plural = 'Даты'
+        ordering = ['dateplan']
+
+    def __str__(self):
+        return f"Дата {self.pk}"
+
+
+
 class Param(models.Model):
     startworktime = models.TimeField(null=True, verbose_name="Начало рабочего дня")
     endtworktime = models.TimeField(null=True, verbose_name="Конец рабочего дня")
     timestap = models.IntegerField(null=True, verbose_name="Шаг планирования в минутах")
-    numofroom = models.IntegerField(null=True, verbose_name="Количество комнат")
-    roomlist = models.TextField(null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="Автор")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Создан')
 

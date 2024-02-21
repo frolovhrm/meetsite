@@ -6,16 +6,16 @@ import json
 
 def make_plan_all_rooms():
     param_meeting_rooms = []
-    plan_meets = []
+    # plan_meets = []
     list_room = Rooms.objects.all().order_by("pk")
     for room in list_room:
         param_meeting_rooms.append([room.pk, room.volume, room.option1, room.option2])
-        if not room.plan:
-            plan_meets.append([])
-        else:
-            plan_meets.append(json.loads(room.plan))
-    print(param_meeting_rooms)
-    print(plan_meets)
+        # if not room.plan:
+        #     plan_meets.append([])
+        # else:
+        #     plan_meets.append(json.loads(room.plan))
+    print('Параметры переговорок', param_meeting_rooms)
+    # print('plan_meets', plan_meets)
 
 
 def make_list_all_meets():
@@ -30,7 +30,7 @@ def make_list_all_meets():
             meet = Meeting.objects.get(pk=meet.pk)
             meet.status = 4
             meet.save()
-    print(list_all_meets)
+    print("Будущие встречи", list_all_meets)
 
 
 
