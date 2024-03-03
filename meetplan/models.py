@@ -50,7 +50,7 @@ class Rooms(models.Model):
 
 
 class DatePlan(models.Model):
-    dateplan = models.DateTimeField(verbose_name="Дата")
+    dateplan = models.DateField(verbose_name="Дата")
     listplan = models.JSONField(null=True, verbose_name="Список запланированных встреч")
 
     class Meta:

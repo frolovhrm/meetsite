@@ -1,5 +1,4 @@
 from django import forms
-from django.utils.safestring import mark_safe
 
 from .models import User, Meeting, Param, Rooms
 
@@ -47,36 +46,15 @@ class ParamForm(forms.ModelForm):
         }
 
 
-# class PlanForm(forms.Form):
-#     date = forms.ModelChoiceField(empty_label="Укажите дату", queryset=Meeting.objects.all(planned=0), label="Дата", widget=forms.Select(attrs={'class': 'form-control'}))
+class PlanForm(forms.Form):
+    all_date = Meeting.objects.all()
+    choice = []
+    for i in all_date:
+        date = str(i.date_meet)
+        choice.append((date, date))
+    # print(choice)
+    date = forms.ChoiceField(choices=choice, label="Дата", widget=forms.Select(attrs={'class': 'form-control'}))
 
-
-# class ModelForm (forms.ModelForm):
-#     class Meta:
-#         model = Meeting
-#         # fields = '__all__'
-#         fields = ['date_meet', "time_start", "time_end", "quantity", "option1", "option2", "user"]
-#         widgets = {
-#             "date_meet": forms.DateInput(attrs={'class': 'form-control'}),
-#             "time_start": forms.TimeInput(attrs={'class': 'form-control'}),
-#             "time_end": forms.TimeInput(attrs={'class': 'form-control'}),
-#             "quantity": forms.NumberInput(attrs={'class': 'form-control'}),
-#             "option1": forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-#             "option2": forms.CheckboxInput(attrs={'class': 'form-check-input'}),
-#             "user": forms.Select(attrs={'class': 'form-control'}),
-#         }
-#
-#
-# class UserForm(forms.Form):
-#     date_meet = forms.DateTimeField(label="Дата", widget=forms.DateInput(attrs={'class': 'form-control'}))
-#     time_start = forms.TimeField(label="Время начала", help_text="ЧЧ:ММ", widget=forms.TimeInput(attrs={'class': 'form-control'}))
-#     time_end = forms.TimeField(label="Время окончания",  help_text="ЧЧ:ММ", widget=forms.TimeInput(attrs={'class': 'form-control'}))
-#     quantity = forms.IntegerField(label="Участников", widget=forms.NumberInput(attrs={'class': 'form-control'}))
-#     option1 = forms.BooleanField(label="Параметр 1", initial="True")
-#     option2 = forms.BooleanField(label="Параметр 2", initial="True")
-#     user = forms.ModelChoiceField(empty_label="Укажите автора", queryset=User.objects.all(), label="Автор", widget=forms.Select(attrs={'class': 'form-control'}))
-#
-# # input_formats='%HH:%MM',
 
 
 

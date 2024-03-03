@@ -1,9 +1,9 @@
-from aiogram.utils import json
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+import datetime
+
 from .models import User, Meeting, Param, Rooms
-from .forms import MeetForm, RoomForm, ParamForm
-from .myfunctions import make_plan_all_rooms, make_list_all_meets
+from .forms import MeetForm, RoomForm, ParamForm, PlanForm
+from .myfunctions import make_plan_all_rooms, make_list_all_meets, create_plan_one_date
 
 
 def meet(request):
@@ -23,7 +23,6 @@ def meet(request):
 
 
 def room(request):
-    # make_plan_all_rooms()
     make_list_all_meets()
     make_plan_all_rooms()
     if request.method == "POST":
@@ -40,11 +39,6 @@ def room(request):
         'form': form
     }
     return render(request, './room.html', context)
-    #
-    # sets = Setapp
-    # listIWantToStore = [1, 2, 3, 4, 5, 'hello']
-    # sets.myList = json.dumps(listIWantToStore)
-    # sets.save()
 
 
 def param(request):
@@ -64,17 +58,20 @@ def param(request):
 
 
 def plan(request):
-    # if request.method == "POST":
-    #     form = UserForm(request.POST)
-    #     if form.is_valid():
-    #         # form.save()
-    #         return redirect('plan')
-    # else:
-    # form = PlanForm()
+    this_date = datetime.date.today()
+    if request.method == "POST":
+        form = PlanForm(request.POST)
+        if form.is_valid():
+            this_date = request.POST.get('date')
+    else:
+        form = PlanForm()
+
+    DATE_NOW = datetime.date.today()
+    create_plan_one_date(this_date)
     meets = Meeting.objects.filter()
     context = {
         'meets': meets,
-        # 'form': form,
+        'form': form,
     }
 
     return render(request, './plan.html', context)
