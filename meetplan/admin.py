@@ -9,9 +9,9 @@ class UserAdmin(admin.ModelAdmin):
 
 
 class MeetingAdmin(admin.ModelAdmin):
-    list_display = ('date_meet', 'time_start', 'time_end', 'quantity', 'status', 'user')
-    list_display_links = ('date_meet',)
-    search_fields = ('user', 'date_meet', 'status')
+    list_display = ('pk', 'date_meet', 'time_start', 'time_end', 'quantity', 'status', 'user')
+    list_display_links = ('pk', 'date_meet',)
+    search_fields = ('pk', 'user', 'date_meet', 'status')
 
 
 class SetappAdmin(admin.ModelAdmin):

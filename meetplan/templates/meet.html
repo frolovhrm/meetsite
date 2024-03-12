@@ -54,7 +54,7 @@
                 {% for item in meets %}
                 <tr>
                     <th scope="row">{{ item.pk }}</th>
-                    <td>{{ item.date_meet }}</td>
+                    <td>{{ item.date_meet|date:"Y-m-d" }}</td>
                     <td>{{ item.time_start }}</td>
                     <td>{{ item.time_end }}</td>
                     <td>{{ item.quantity }}</td>

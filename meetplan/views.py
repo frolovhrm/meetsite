@@ -1,9 +1,11 @@
+import json
+
 from django.shortcuts import render, redirect
 import datetime
 
-from .models import User, Meeting, Param, Rooms
+from .models import User, Meeting, Param, Rooms, DatePlan
 from .forms import MeetForm, RoomForm, ParamForm, PlanForm
-from .myfunctions import make_plan_all_rooms, make_list_all_meets, create_plan_one_date
+from .myfunctions import make_plan_all_rooms, make_list_all_meets, plan_last_meeting
 
 
 def meet(request):
@@ -11,6 +13,7 @@ def meet(request):
         form = MeetForm(request.POST)
         if form.is_valid():
             form.save()
+            plan_last_meeting()
             return redirect('meet')
     else:
         form = MeetForm()
@@ -59,19 +62,40 @@ def param(request):
 
 def plan(request):
     this_date = datetime.date.today()
+
     if request.method == "POST":
         form = PlanForm(request.POST)
         if form.is_valid():
             this_date = request.POST.get('date')
+            print('This_date', this_date)
+            # create_plan_one_date(this_date)
     else:
         form = PlanForm()
 
-    DATE_NOW = datetime.date.today()
-    create_plan_one_date(this_date)
-    meets = Meeting.objects.filter()
+    qplan = DatePlan.objects.filter(dateplan=this_date)
+    if qplan:
+        print("выборка есть")
+    else:
+        print("выборки нет")
+
+    if qplan:
+        list = qplan[0].listplan
+        meets = json.loads(list)
+        # print(meets)
+        # n = 0
+        # number = []
+        # for i in meets:
+        #     for j in i:
+        #         print(j)
+    else:
+        meets = [[]]
+    # number = [num for num in range(len(meets))]
+    # print(number)
     context = {
+        'this_date': str(this_date),
         'meets': meets,
         'form': form,
+        # 'number': number
     }
 
     return render(request, './plan.html', context)

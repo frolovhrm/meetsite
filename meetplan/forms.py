@@ -47,15 +47,18 @@ class ParamForm(forms.ModelForm):
 
 
 class PlanForm(forms.Form):
-    all_date = Meeting.objects.all()
-    choice = []
-    for i in all_date:
-        date = str(i.date_meet)
-        choice.append((date, date))
+    # all_date = Meeting.objects.all().exclude(status=4)
+    # choice = []
+    # listdate = []
+    # for i in all_date:
+    #     date = str(i.date_meet)
+    #     if date not in listdate:
+    #         choice.append((date, date))
+    #         listdate.append(date)
     # print(choice)
-    date = forms.ChoiceField(choices=choice, label="Дата", widget=forms.Select(attrs={'class': 'form-control'}))
+    # date = forms.ChoiceField(choices=choice, label="Дата", widget=forms.Select(attrs={'class': 'form-control'}))
+    date = forms.DateField(label="например 2025-12-21", widget=forms.DateInput(attrs={'class': 'form-control'}))
 
-
-
+# , input_formats="%Y-%m-%d"
 
 

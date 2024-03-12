@@ -20,71 +20,44 @@
             <form method="POST" novalidate>
                 {% csrf_token %}
 
-                <h5 class="card-subtitle text-body-secondary text-center">Планирование на дату</h5>
+                <h5 class="card-subtitle text-body-secondary text-center">Отчет на дату</h5>
                 <br>
-                    {{ form.as_p }}
+                {{ form.as_p }}
                 <br>
-                <input type="submit" value="Запланировать">
+                <input type="submit" value="Получить отчет">
             </form>
 
         </div>
 
         <div class="col-xl-10">
+
+            <h2>Список встреч на {{ this_date }}</h2>
+            {% for item in meets %}
+
+            <h4>Переговорка {{ 1 }}</h4>
+
             <table class="table table-bordered ">
                 <thead class="table table-light">
                 <tr>
                     <th scope="col">№</th>
-                    <th scope="col">Дата</th>
                     <th scope="col">Начало</th>
                     <th scope="col">Окончание</th>
                     <th scope="col">Участников</th>
-                    <th scope="col">Опция 1</th>
-                    <th scope="col">Опция 2</th>
-                    <th scope="col">Статус</th>
-                    <th scope="col">Автор</th>
-
                 </tr>
                 </thead>
 
                 <tbody>
-                {% for item in meets %}
-                <tr>
-                    <th scope="row">{{ item.pk }}</th>
-                    <td>{{ item.date_meet }}</td>
-                    <td>{{ item.time_start }}</td>
-                    <td>{{ item.time_end }}</td>
-                    <td>{{ item.quantity }}</td>
-                    <td>{% if item.option1 %}
-                        Да
-                        {% else %}
-                        Нет
-                        {% endif %}
-                    </td>
-                    <td>{% if item.option2 %}
-                        Да
-                        {% else %}
-                        Нет
-                        {% endif %}
-                    </td>
-                    <td>{% if item.status == 0 %}
-                        не запланирована
-                        {% elif item.status == 1 %}
-                        запланирована
-                        {% elif item.status == 2 %}
-                        время занято
-                        {% elif item.status == 3 %}
-                        измените параметры
-                        {% elif item.status == 4 %}
-                        встреча завершилась
-                        {% else %}
-                        {{ item.status }}
-                        {% endif %}
-                    </td>
-                    <td>{{ item.user }}</td>
-                </tr>
+                {% for fields in item %}
+                    <tr>
+                        <th scope="row">{{ fields.0 }}</th>
+                        <td>{{ fields.1|slice:'0:5' }}</td>
+                        <td>{{ fields.2|slice:'0:5' }}</td>
+                        <td>{{ fields.3 }}</td>
+                    </tr>
                 {% endfor %}
                 </tbody>
             </table>
+            {% endfor %}
         </div>
     </div>
 </div>
