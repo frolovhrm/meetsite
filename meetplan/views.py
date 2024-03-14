@@ -5,7 +5,7 @@ import datetime
 
 from .models import User, Meeting, Param, Rooms, DatePlan
 from .forms import MeetForm, RoomForm, ParamForm, PlanForm
-from .myfunctions import make_plan_all_rooms, make_list_all_meets, plan_last_meeting
+from .myfunctions import make_plan_all_rooms, plan_last_meeting
 
 
 def meet(request):
@@ -17,7 +17,7 @@ def meet(request):
             return redirect('meet')
     else:
         form = MeetForm()
-    meets = Meeting.objects.all().order_by('date_meet', 'time_start')
+    meets = Meeting.objects.all().order_by('-date_meet', 'time_start')
     context = {
         'meets': meets,
         'form': form
@@ -26,7 +26,7 @@ def meet(request):
 
 
 def room(request):
-    make_list_all_meets()
+    # make_list_all_meets()
     make_plan_all_rooms()
     if request.method == "POST":
         form = RoomForm(request.POST)
@@ -67,98 +67,18 @@ def plan(request):
         form = PlanForm(request.POST)
         if form.is_valid():
             this_date = request.POST.get('date')
-            print('This_date', this_date)
-            # create_plan_one_date(this_date)
     else:
         form = PlanForm()
 
     qplan = DatePlan.objects.filter(dateplan=this_date)
     if qplan:
-        print("выборка есть")
-    else:
-        print("выборки нет")
-
-    if qplan:
         list = qplan[0].listplan
         meets = json.loads(list)
-        # print(meets)
-        # n = 0
-        # number = []
-        # for i in meets:
-        #     for j in i:
-        #         print(j)
     else:
         meets = [[]]
-    # number = [num for num in range(len(meets))]
-    # print(number)
     context = {
         'this_date': str(this_date),
         'meets': meets,
         'form': form,
-        # 'number': number
     }
-
     return render(request, './plan.html', context)
-
-
-# def setapp(request):
-#     if request.method == "POST":
-#         form = ParamForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('index')
-#     else:
-#         form = ParamForm()
-#     return render(request, './setapp.html', {'form': form})
-#
-#     pass
-
-
-
-
-# def model_form(request):
-#     if request.method == 'POST':
-#         form = ModelForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('index')
-#
-#     form = ModelForm()
-#     context = {'form': form}
-#     return render(request, 'modelform.html', context)
-#
-#
-# def user_form(request):
-#     userform = UserForm
-#     if request.method == "POST":
-#         userform = UserForm(request.POST)
-#         if userform.is_valid():
-#             name = userform.cleaned_data
-#             print(name)
-#             # return HttpResponse("<h2>Имя введено корректно - {0} </h2> ".format(name))
-#     return render(request, 'userform.html', {'form': userform})
-#
-#
-# def my_form(request):
-#     if request.method == "POST":
-#         my_form = UserForm(request.POST)
-#         if my_form.is_valid():
-#             Meeting.objects.create(**my_form.cleaned_data)
-#             return redirect('index')
-#     else:
-#         my_form = UserForm()
-#     return render(request, "./my_form.html", {"form": my_form})
-#
-# def index(request):
-#     meets = Meeting.objects.all().order_by('date_meet', 'time_start')
-#     users = User.objects.all()  #### order_by('-created_at')
-#     meetlist = {
-#         'meets': meets,
-#         'users': users,
-#     }
-#     return render(request, './base.html', meetlist)
-#
-#
-# def listofprof(request):
-#     prof = Setapp.objects.all().order_by('-pk')
-#     return render(request, './listofprof.html', {'prof': prof})

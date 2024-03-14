@@ -34,7 +34,7 @@
             <table class="table table-bordered ">
                 <thead class="table table-light">
                 <tr>
-<!--                    <th scope="col">№</th>-->
+                    <th scope="col">№</th>
                     <th scope="col">Название</th>
                     <th scope="col">Кол-во мест</th>
                     <th scope="col">Опция 1</th>
@@ -46,7 +46,7 @@
                 <tbody class="text-center">
                 {% for item in rooms %}
                 <tr>
-<!--                    <th>{{ item.pk }}</th>-->
+                    <th>{{ forloop.counter }}</th>
                     <td>{{ item.name }}</td>
                     <td>{{ item.volume }}</td>
                     <td>{% if item.option1 %}

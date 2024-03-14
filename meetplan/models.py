@@ -28,7 +28,7 @@ class Meeting(models.Model):
     class Meta:
         verbose_name = 'Встреча'
         verbose_name_plural = 'Встречи'
-        ordering = ['date_meet', 'time_start', 'status']
+        ordering = ['-date_meet', '-time_start', '-status']
 
     def __str__(self):
         return f"Встреча {self.pk}"
@@ -62,7 +62,6 @@ class DatePlan(models.Model):
         return f"Дата {self.pk}"
 
 
-
 class Param(models.Model):
     startworktime = models.TimeField(null=True, verbose_name="Начало рабочего дня")
     endtworktime = models.TimeField(null=True, verbose_name="Конец рабочего дня")
@@ -77,5 +76,3 @@ class Param(models.Model):
 
     def __str__(self):
         return f"Параметр {self.pk}"
-
-
