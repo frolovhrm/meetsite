@@ -17,13 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from meetplan import views
+from meetplan.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.meet, name='meet'),
-    path('meet/', views.meet, name='meet'),
-    path('room/', views.room, name='room'),
-    path('param/', views.param, name='param'),
-    path('plan/', views.plan, name='plan')
+    path('register/', register, name='register'),
+    path('login/', user_login, name='login'),
+    path('logout/', user_logout, name='logout'),
+    path('meet/', meet, name='meet'),
+    path('room/', room, name='room'),
+    path('param/', param, name='param'),
+    path('plan/', plan, name='plan')
 
 ]

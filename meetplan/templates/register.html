@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %} Meeting orders {% endblock %}
+
+
+{% block content %}
+    <div class="container text-left">
+
+    <div class="row">
+    <div class="col-6">
+            <h3>Регистрация</h3>
+          {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% else %}
+                <div class="alert alert-{{ message.tags }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+
+
+
+
+
+    <form method="POST">
+        {% csrf_token %}
+<!--                <h5 class="card-subtitle text-body-secondary text-center">Новая встреча</h5>-->
+            <br>
+                {{ form.as_p }}
+            <br>
+        <input type="submit" value="Сохранить">
+        <br>
+    </form>
+
+    </div>
+    <div class="col">
+    </div>
+  </div>
+     </div>
+{% endblock %}
+

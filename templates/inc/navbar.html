@@ -8,6 +8,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="navbar-brand" href="{% url 'meet' %}">Встречи</a>
                 </li>
@@ -17,12 +18,21 @@
                 <li class="nav-item">
                     <a class="navbar-brand" href="{% url 'room' %}">Переговорки</a>
                 </li>
+                {% endif %}
                 <li class="nav-item">
-                    <a class="navbar-brand" href="{% url 'plan' %}">Планирование</a>
+                    <a class="navbar-brand" href="{% url 'plan' %}">План на день</a>
                 </li>
 
 
             </ul>
+            <span class="navbar-text">
+                {% if request.user.is_authenticated %}
+                    Добро пожаловать, {{ user.username }} | <a href="{% url 'logout' %}"> Выход </a>
+                {% else %}
+                      <a href="{% url 'register' %}"> Registration </a> | <a href="{% url 'login' %}"> Login </a>
+                {% endif %}
+                 </span>
+
         </div>
     </div>
 </nav>
