@@ -2,12 +2,15 @@ import json
 import datetime
 
 from django.contrib.auth import login, logout
+from django.http import HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.contrib import messages
 
 from .models import Meeting, Param, Rooms, DatePlan
 from .forms import MeetForm, RoomForm, ParamForm, PlanForm, UserRegisterForm, UserLoginForm
 from .myfunctions import make_plan_all_rooms, plan_last_meeting
+
+
 
 
 def register(request):
@@ -121,3 +124,7 @@ def plan(request):
         'form': form,
     }
     return render(request, './plan.html', context)
+
+
+def page_not_found(request, exception):
+    return HttpResponseNotFound("<h1>Страница не найдена</h1>")

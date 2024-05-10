@@ -15,19 +15,15 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from meetplan import views
-from meetplan.views import *
+from django.urls import path, include
+
+from meetplan.views import page_not_found
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.meet, name='meet'),
-    path('register/', register, name='register'),
-    path('login/', user_login, name='login'),
-    path('logout/', user_logout, name='logout'),
-    path('meet/', meet, name='meet'),
-    path('room/', room, name='room'),
-    path('param/', param, name='param'),
-    path('plan/', plan, name='plan')
-
+    path('', include('meetplan.urls')),
 ]
+
+handler404 = page_not_found
+
