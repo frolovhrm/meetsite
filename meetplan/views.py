@@ -60,6 +60,7 @@ def meet(request):
     else:
         form = MeetForm()
     meets = Meeting.objects.all().order_by('-date_meet', 'time_start')
+
     context = {
         'meets': meets,
         'form': form
